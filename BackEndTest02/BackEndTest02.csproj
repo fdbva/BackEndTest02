@@ -175,6 +175,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\SeedInit.cs" />
     <Compile Include="Models\Aluno.cs" />
     <Compile Include="Models\BackEndDbContext.cs" />
     <Compile Include="Models\Disciplina.cs" />
