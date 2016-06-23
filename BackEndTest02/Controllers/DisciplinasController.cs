@@ -6,7 +6,6 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BackEndTest02.Models;
@@ -25,9 +24,9 @@ namespace BackEndTest02.Controllers
 
         // GET: api/Disciplinas/5
         [ResponseType(typeof(Disciplina))]
-        public async Task<IHttpActionResult> GetDisciplina(int id)
+        public IHttpActionResult GetDisciplina(int id)
         {
-            Disciplina disciplina = await db.Disciplinas.FindAsync(id);
+            Disciplina disciplina = db.Disciplinas.Find(id);
             if (disciplina == null)
             {
                 return NotFound();
@@ -38,7 +37,7 @@ namespace BackEndTest02.Controllers
 
         // PUT: api/Disciplinas/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutDisciplina(int id, Disciplina disciplina)
+        public IHttpActionResult PutDisciplina(int id, Disciplina disciplina)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +53,7 @@ namespace BackEndTest02.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,7 +72,7 @@ namespace BackEndTest02.Controllers
 
         // POST: api/Disciplinas
         [ResponseType(typeof(Disciplina))]
-        public async Task<IHttpActionResult> PostDisciplina(Disciplina disciplina)
+        public IHttpActionResult PostDisciplina(Disciplina disciplina)
         {
             if (!ModelState.IsValid)
             {
@@ -81,23 +80,23 @@ namespace BackEndTest02.Controllers
             }
 
             db.Disciplinas.Add(disciplina);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = disciplina.DisciplinaId }, disciplina);
         }
 
         // DELETE: api/Disciplinas/5
         [ResponseType(typeof(Disciplina))]
-        public async Task<IHttpActionResult> DeleteDisciplina(int id)
+        public IHttpActionResult DeleteDisciplina(int id)
         {
-            Disciplina disciplina = await db.Disciplinas.FindAsync(id);
+            Disciplina disciplina = db.Disciplinas.Find(id);
             if (disciplina == null)
             {
                 return NotFound();
             }
 
             db.Disciplinas.Remove(disciplina);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return Ok(disciplina);
         }

@@ -6,7 +6,6 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BackEndTest02.Models;
@@ -25,9 +24,9 @@ namespace BackEndTest02.Controllers
 
         // GET: api/Alunos/5
         [ResponseType(typeof(Aluno))]
-        public async Task<IHttpActionResult> GetAluno(int id)
+        public IHttpActionResult GetAluno(int id)
         {
-            Aluno aluno = await db.Alunos.FindAsync(id);
+            Aluno aluno = db.Alunos.Find(id);
             if (aluno == null)
             {
                 return NotFound();
@@ -38,7 +37,7 @@ namespace BackEndTest02.Controllers
 
         // PUT: api/Alunos/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutAluno(int id, Aluno aluno)
+        public IHttpActionResult PutAluno(int id, Aluno aluno)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +53,7 @@ namespace BackEndTest02.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,7 +72,7 @@ namespace BackEndTest02.Controllers
 
         // POST: api/Alunos
         [ResponseType(typeof(Aluno))]
-        public async Task<IHttpActionResult> PostAluno(Aluno aluno)
+        public IHttpActionResult PostAluno(Aluno aluno)
         {
             if (!ModelState.IsValid)
             {
@@ -81,23 +80,23 @@ namespace BackEndTest02.Controllers
             }
 
             db.Alunos.Add(aluno);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = aluno.AlunoId }, aluno);
         }
 
         // DELETE: api/Alunos/5
         [ResponseType(typeof(Aluno))]
-        public async Task<IHttpActionResult> DeleteAluno(int id)
+        public IHttpActionResult DeleteAluno(int id)
         {
-            Aluno aluno = await db.Alunos.FindAsync(id);
+            Aluno aluno = db.Alunos.Find(id);
             if (aluno == null)
             {
                 return NotFound();
             }
 
             db.Alunos.Remove(aluno);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return Ok(aluno);
         }

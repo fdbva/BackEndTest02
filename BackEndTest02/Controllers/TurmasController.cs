@@ -6,7 +6,6 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BackEndTest02.Models;
@@ -25,9 +24,9 @@ namespace BackEndTest02.Controllers
 
         // GET: api/Turmas/5
         [ResponseType(typeof(Turma))]
-        public async Task<IHttpActionResult> GetTurma(int id)
+        public IHttpActionResult GetTurma(int id)
         {
-            Turma turma = await db.Turmas.FindAsync(id);
+            Turma turma = db.Turmas.Find(id);
             if (turma == null)
             {
                 return NotFound();
@@ -38,7 +37,7 @@ namespace BackEndTest02.Controllers
 
         // PUT: api/Turmas/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutTurma(int id, Turma turma)
+        public IHttpActionResult PutTurma(int id, Turma turma)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +53,7 @@ namespace BackEndTest02.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,7 +72,7 @@ namespace BackEndTest02.Controllers
 
         // POST: api/Turmas
         [ResponseType(typeof(Turma))]
-        public async Task<IHttpActionResult> PostTurma(Turma turma)
+        public IHttpActionResult PostTurma(Turma turma)
         {
             if (!ModelState.IsValid)
             {
@@ -81,23 +80,23 @@ namespace BackEndTest02.Controllers
             }
 
             db.Turmas.Add(turma);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = turma.Id }, turma);
         }
 
         // DELETE: api/Turmas/5
         [ResponseType(typeof(Turma))]
-        public async Task<IHttpActionResult> DeleteTurma(int id)
+        public IHttpActionResult DeleteTurma(int id)
         {
-            Turma turma = await db.Turmas.FindAsync(id);
+            Turma turma = db.Turmas.Find(id);
             if (turma == null)
             {
                 return NotFound();
             }
 
             db.Turmas.Remove(turma);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return Ok(turma);
         }

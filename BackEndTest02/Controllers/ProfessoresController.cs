@@ -6,7 +6,6 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BackEndTest02.Models;
@@ -25,9 +24,9 @@ namespace BackEndTest02.Controllers
 
         // GET: api/Professores/5
         [ResponseType(typeof(Professor))]
-        public async Task<IHttpActionResult> GetProfessor(int id)
+        public IHttpActionResult GetProfessor(int id)
         {
-            Professor professor = await db.Professores.FindAsync(id);
+            Professor professor = db.Professores.Find(id);
             if (professor == null)
             {
                 return NotFound();
@@ -38,7 +37,7 @@ namespace BackEndTest02.Controllers
 
         // PUT: api/Professores/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProfessor(int id, Professor professor)
+        public IHttpActionResult PutProfessor(int id, Professor professor)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +53,7 @@ namespace BackEndTest02.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,7 +72,7 @@ namespace BackEndTest02.Controllers
 
         // POST: api/Professores
         [ResponseType(typeof(Professor))]
-        public async Task<IHttpActionResult> PostProfessor(Professor professor)
+        public IHttpActionResult PostProfessor(Professor professor)
         {
             if (!ModelState.IsValid)
             {
@@ -81,23 +80,23 @@ namespace BackEndTest02.Controllers
             }
 
             db.Professores.Add(professor);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = professor.ProfessorId }, professor);
         }
 
         // DELETE: api/Professores/5
         [ResponseType(typeof(Professor))]
-        public async Task<IHttpActionResult> DeleteProfessor(int id)
+        public IHttpActionResult DeleteProfessor(int id)
         {
-            Professor professor = await db.Professores.FindAsync(id);
+            Professor professor = db.Professores.Find(id);
             if (professor == null)
             {
                 return NotFound();
             }
 
             db.Professores.Remove(professor);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return Ok(professor);
         }
